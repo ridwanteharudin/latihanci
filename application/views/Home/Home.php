@@ -49,6 +49,30 @@
             echo form_input($data);
         ?>
     </div>
+    <div class="row">
+		<div class="col-md-4">
+            <div class="form-group">
+                <input type="radio" name="gender" value="pria"/>Pria<br>
+                <input type="radio" name="gender" value="wanita"/>Wanita<br>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <input type="checkbox" name="hobby[]" value="Baca"/>Membaca<br>
+                <input type="checkbox" name="hobby[]" value="Mancing"/>Memancing<br>
+                <input type="checkbox" name="hobby[]" value="Bola"/>Bola<br>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <select name="agama">
+                    <option value="islam">Islam</option>
+                    <option value="kristen">Kristen</option>
+                    <option value="Budha">Budha</option>
+                </select>
+            </div>
+        </div>
+    </div>
     <?php
         $data = array(
             'type' => 'submit',
@@ -73,6 +97,6 @@
       </div>
       <button type="submit" class="btn btn-success">Submit</button>
     </form>
--->
+--> <?php echo $this->session->flashdata('no_login');?>
     <div><?php echo validation_errors(); ?></div>
 </div>

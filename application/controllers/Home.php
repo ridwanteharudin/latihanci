@@ -13,20 +13,37 @@ class Home extends CI_Controller{
         $this->form_validation->set_rules('email','Email','required|is_unique[member.email]|trim|valid_email');
         $this->form_validation->set_rules('password','Password','required|min_length[5]');
         $this->form_validation->set_rules('konfirmasi','Konfirmasi Password','required|matches[password]');
-        
+        $this->form_validation->set_rules('gender','Gender');
+        $this->form_validation->set_rules('hobby[]','Hobby','required');
         if($this->form_validation->run()){
-            $username = $this->input->post('username');
-            $password = $this->input->post('password');
-            $email = $this->input->post('email');
-            
-            echo $username;
-            echo $password;
-            echo $email;
-            
+            $id = $this->User_model->insertmember();
+            if($id >= 1){
+                $data = array(
+                    'userId' => $id,
+                    'logged_in' => True
+                );
+                $this->session->set_userdata($data);
+                redirect('Home/admin');
+            } 
         }else{
              $data['Judul']='Halaman 1';
         $data['Content'] = 'home/home';
         $this->load->view('Home/Content',$data);
         }
+    }
+    public function admin()
+    {
+        if($this->session->userdata('logged_in')){
+            $this->load->view('Home/Dashboard');
+        }else{
+            $this->session->set_flashdata('no_login','Harus login terlebih dahulu');
+            redirect('home');
+        }
+    }
+    public function logout()
+    {
+        $this->session->sess_destroy();
+        redirect('home');
+        
     }
 }
