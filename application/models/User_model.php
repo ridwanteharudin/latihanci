@@ -25,5 +25,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             $id = $this->db->insert_id(); 
             return $id;
         }
+        public function getMember()
+        {
+            $username = $this->input->post('username');
+            $password = $this->input->post('password');
+            
+            $query = $this->db->get_where('member', array('username' => $username, 'password' => $password));
+            
+            return $query->row();
+        }
     }
 ?>

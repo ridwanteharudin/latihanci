@@ -98,5 +98,6 @@
       <button type="submit" class="btn btn-success">Submit</button>
     </form>
 --> <?php echo $this->session->flashdata('no_login');?>
+    <?php echo $this->session->flashdata('salah');?>
     <div><?php echo validation_errors(); ?></div>
 </div>

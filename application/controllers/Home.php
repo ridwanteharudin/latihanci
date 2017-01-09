@@ -3,9 +3,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Home extends CI_Controller{
     public function index(){
-        $data['Judul']='Halaman 1';
-        $data['Content'] = 'home/home';
-        $this->load->view('Home/Content',$data);
+        $this->form_validation->set_rules('username','Username','required|trim');
+        $this->form_validation->set_rules('password','Password','required');
+        if($this->form_validation->run()){
+            $user_data = $this->User_model->getMember();
+            if($user_data !== null){
+                $data = array(
+                    'userId' => $user_data->$id,
+                    'logged_in' => True
+                );
+                $this->session->set_userdata($data);
+                redirect('home/admin');
+            }
+            else{
+                $this->session->set_flashdata('salah','Username atau password salah');
+                redirect('home');
+            }
+        }
+        else{
+            $data['Judul']='Halaman 1';
+            $data['Content'] = 'home/login';
+            $this->load->view('Home/Content',$data);
+        }
     }
     public function daftar()
     {
@@ -26,9 +45,9 @@ class Home extends CI_Controller{
                 redirect('Home/admin');
             } 
         }else{
-             $data['Judul']='Halaman 1';
-        $data['Content'] = 'home/home';
-        $this->load->view('Home/Content',$data);
+            $data['Judul']='Halaman 1';
+            $data['Content'] = 'home/home';
+            $this->load->view('Home/Content',$data);
         }
     }
     public function admin()
@@ -44,6 +63,10 @@ class Home extends CI_Controller{
     {
         $this->session->sess_destroy();
         redirect('home');
+        
+    }
+    public function login()
+    {
         
     }
 }
